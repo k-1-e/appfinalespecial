@@ -6,8 +6,6 @@ interface Props {
     placeholder: string;
     onChangeText: (text: string) => void;
 }
-
-
 const FormImputs = ({ title, placeholder, onChangeText }: Props) => {
     return (
         <View>

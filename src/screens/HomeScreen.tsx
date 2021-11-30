@@ -1,13 +1,9 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import GetNota from '../componentes/FormImputs'
 
 const Calificaciones = () => {
 
-
-    const Separator = () => (
-        <View style={styles.separator} />
-      );
 
     const [estudiante, setEstudiante] = useState<string>('')
 
@@ -17,30 +13,40 @@ const Calificaciones = () => {
 
     const [segundaNota, setSegundaNota] = useState('')
 
-    const [notaFinales, setnotaFinales] = useState<number[]>([])
-    let promedioFinal
+    const [notaFinales, setnotaFinales] = useState<string[]>([])
+    const [notaFinal, setnotaFinal] = useState<string>('')
+
+    let promedioFinal: number = 0
+    let promedioValidado = ''
+    let reprobado = 'SD'
+
     const ValidarNota = () => {
         setEstudiantes([...estudiantes, estudiante])
         let notaFinal = parseFloat(primerNota) + parseFloat(segundaNota)
         promedioFinal = notaFinal / 2
-        setnotaFinales([...notaFinales, promedioFinal])
-        
+        ValidacionDeAprobacion()
+        setnotaFinal(promedioFinal.toPrecision())
     }
 
-    const getNotas = () => {
-        setEstudiantes([...estudiantes])
+
+    const ValidacionDeAprobacion = () => {
+        if (primerNota === 'SD' || segundaNota === 'SD' || primerNota === 'NSP' || segundaNota === 'SD') {
+            promedioValidado = reprobado
+            setnotaFinales([...notaFinales, promedioValidado])
+        }
+        else {
+            setnotaFinales([...notaFinales, promedioFinal.toString()])
+        }
     }
-    //  useEffect(, [])
     return (
         <View style={styles.containerBase}>
-            <Text style={styles.text}>Nombre del estudiante</Text>
+            <Text style={styles.textCabeza}>Nombre del estudiante</Text>
             <View style={styles.container}>
                 <TextInput
                     style={styles.inputs}
                     placeholder={"Nombre del Estudiante"}
                     onChangeText={setEstudiante}
                 />
-                
             </View>
             <View style={styles.containerNota}>
                 <GetNota
@@ -53,12 +59,12 @@ const Calificaciones = () => {
                     placeholder={"IIP"}
                     onChangeText={setSegundaNota}
                 />
-                 <GetNota
-                    title={"NF"}
-                    placeholder={"NF"}
-                    onChangeText={setSegundaNota}
-                />
-               
+
+                <View>
+                    <Text style={styles.text}>NF</Text>
+                    <Text style={styles.input2}>{notaFinal}</Text>
+
+                </View>
                 <TouchableOpacity
                     onPress={ValidarNota}
                     style={styles.botonReset}
@@ -68,16 +74,13 @@ const Calificaciones = () => {
             </View>
             <ScrollView>
                 {
-                  
                     estudiantes.map((estudiantes, index) => (
                         <View style={styles.container} key={index}>
-                          
                             <Text style={styles.text} >{estudiantes}</Text>
-                            <Separator />
-                            <Text style={styles.text}> la nota es: {notaFinales[index]}</Text>
-                          
+                            <Text style={styles.text}>Nota Final :{notaFinales[index]}</Text>
                         </View>
                     ))
+
                 }
             </ScrollView>
         </View>
@@ -114,18 +117,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     containerNota: {
-        width: '50%',
-        marginBottom: 20,
+        width: '95%',
         flexDirection: 'row',
-        paddingVertical: 15,
-        paddingHorizontal: 8,
         justifyContent: 'space-between',
-        marginLeft: 30,
+        marginBottom: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 8,
+        borderRadius: 10,
+        marginLeft: 10,
+        borderWidth: 3,
+        borderColor: '#8C8A8A',
+        marginTop: 10,
     },
     botonReset: {
         backgroundColor: '#8C8A8A',
         borderRadius: 8,
-        width: '60%',
+        width: '30%',
         paddingVertical: 7,
         marginTop: 5
     },
@@ -138,11 +145,18 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        marginTop: 60,
-        fontSize: 20,
-        color: '#034C50',
+        fontSize: 24,
+        color: '#05786A',
     },
-    inputNotaFinal: {
+    textReprobado: {
+        fontSize: 24,
+        color: '#B52222',
+    },
+    textAprobado: {
+        fontSize: 24,
+        color: '#05786A',
+    },
+    input2: {
         backgroundColor: '#F2F8FB',
         borderRadius: 8,
         padding: 10,
@@ -152,11 +166,11 @@ const styles = StyleSheet.create({
         color: '#004445'
 
     },
-    separator: {
-        marginVertical: 8,
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-      },
-
+    textCabeza: {
+        fontSize: 30,
+        color: '#034C50',
+        marginTop: 50,
+        marginLeft: 10
+    }
 
 })
