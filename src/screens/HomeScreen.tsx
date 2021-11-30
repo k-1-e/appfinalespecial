@@ -1,142 +1,162 @@
-import { Button, Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, } from 'react-native';
-import React, { useState, useEffect } from 'react'
-// import React from 'react'; {useState, } from 'react'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native'
+import GetNota from '../componentes/FormImputs'
 
-const FeedScreen = ({ navigation }) => {
-
-    const [tarea, setTarea] = useState<string>('')
-    const [tareas, setTareas] = useState<string[]>([])
+const Calificaciones = () => {
 
 
-    // const [usuario , setUsuario] = useState('')
-    const crearTarea = () => {
-        setTareas([...tareas, tarea])
+    const Separator = () => (
+        <View style={styles.separator} />
+      );
+
+    const [estudiante, setEstudiante] = useState<string>('')
+
+    const [estudiantes, setEstudiantes] = useState<string[]>([])
+
+    const [primerNota, setPrimerNota] = useState('')
+
+    const [segundaNota, setSegundaNota] = useState('')
+
+    const [notaFinales, setnotaFinales] = useState<number[]>([])
+    let promedioFinal
+    const ValidarNota = () => {
+        setEstudiantes([...estudiantes, estudiante])
+        let notaFinal = parseFloat(primerNota) + parseFloat(segundaNota)
+        promedioFinal = notaFinal / 2
+        setnotaFinales([...notaFinales, promedioFinal])
+        
     }
 
-    const eliminarTarea = (id: number) => {
-        tareas.splice(id, 1)
-        getTareas()
+    const getNotas = () => {
+        setEstudiantes([...estudiantes])
     }
-    const getTareas = () => {
-        setTareas([...tareas])
-    }
-
-    useEffect(getTareas, [])
-
+    //  useEffect(, [])
     return (
-        <ScrollView>
-
-            <Text style={styles.colortexto}>Nombre del Estudiante</Text>
-
-   
-                <View style={styles.container}>
-
-                    <TextInput
-
-                        placeholder={"Nombre del estudiante"}
-                        onChangeText={setTarea}
-
-                    />
-
-                </View>
-                <View style={styles.botonagregar}>
-                    <Button
-                        title="agregar"
-                        onPress={crearTarea}
-                    />
-                    
-                </View>
-
-
+        <View style={styles.containerBase}>
+            <Text style={styles.text}>Nombre del estudiante</Text>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.inputs}
+                    placeholder={"Nombre del Estudiante"}
+                    onChangeText={setEstudiante}
+                />
+                
+            </View>
+            <View style={styles.containerNota}>
+                <GetNota
+                    title={"IP"}
+                    placeholder={"IP"}
+                    onChangeText={setPrimerNota}
+                />
+                <GetNota
+                    title={"IIP"}
+                    placeholder={"IIP"}
+                    onChangeText={setSegundaNota}
+                />
+                 <GetNota
+                    title={"NF"}
+                    placeholder={"NF"}
+                    onChangeText={setSegundaNota}
+                />
+               
+                <TouchableOpacity
+                    onPress={ValidarNota}
+                    style={styles.botonReset}
+                >
+                    <Text style={styles.textbotonReset}>Agregar</Text>
+                </TouchableOpacity>
+            </View>
+            <ScrollView>
                 {
-                    tareas.map((lista, index) => (
+                  
+                    estudiantes.map((estudiantes, index) => (
                         <View style={styles.container} key={index}>
-
-                            <Text style={styles.text}>{lista}</Text>
-
-                            <Button
-                                color="red"
-                                title="Eliminar"
-                                onPress={() => eliminarTarea(index)}
-                            />
-
-
+                          
+                            <Text style={styles.text} >{estudiantes}</Text>
+                            <Separator />
+                            <Text style={styles.text}> la nota es: {notaFinales[index]}</Text>
+                          
                         </View>
-
                     ))
                 }
-
-         
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
-export default FeedScreen
+
+export default Calificaciones
 
 const styles = StyleSheet.create({
-
     container: {
         width: '95%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'white',
-        marginBottom: 15,
-        paddingVertical: 8,
+        marginBottom: 10,
+        paddingVertical: 10,
         paddingHorizontal: 8,
-        marginLeft: 10,
-        borderWidth: 2,
         borderRadius: 10,
+        marginLeft: 10,
+        borderWidth: 3,
+        borderColor: '#8C8A8A',
+        marginTop: 10,
+    },
+    inputs: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 8,
+        padding: 10,
+        fontSize: 22,
+        color: '#034C50',
+        width: '70%'
     },
     containerBase: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+        justifyContent: 'center'
     },
-    botonagregar: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginHorizontal: 300,
-        width: 330,
-        padding: '1%'
+    containerNota: {
+        width: '50%',
+        marginBottom: 20,
+        flexDirection: 'row',
+        paddingVertical: 15,
+        paddingHorizontal: 8,
+        justifyContent: 'space-between',
+        marginLeft: 30,
     },
-
-    textbotonInsertar: {
-        color: 'white',
+    botonReset: {
+        backgroundColor: '#8C8A8A',
+        borderRadius: 8,
+        width: '60%',
+        paddingVertical: 7,
+        marginTop: 5
+    },
+    textbotonReset: {
+        color: '#05786A',
         fontWeight: 'bold',
-        fontSize: 25,
-        borderRadius: 50,
-
-    },
-    colortexto: {
         fontSize: 20,
-        color: '#22B5A3',
-        padding: '1%',
+        textAlign: 'center',
+        marginTop: 10
 
     },
     text: {
-        fontSize: 34,
+        marginTop: 60,
+        fontSize: 20,
         color: '#034C50',
-        width: '70%'
-
     },
-
-    button: {
-        color: '#C4C4C4',
-        marginTop: 50
-    },
-
-    btnagregar: {
-        backgroundColor: 'black',
-        marginTop: '70%',
+    inputNotaFinal: {
+        backgroundColor: '#F2F8FB',
         borderRadius: 8,
-    },
-    base: {
-        flex: 1,
-        backgroundColor: '#f5e3e1'
+        padding: 10,
+        textAlign: 'right',
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#004445'
 
     },
-
-
+    separator: {
+        marginVertical: 8,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
 
 })
-
-
