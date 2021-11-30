@@ -7,22 +7,17 @@ const Calificaciones = () => {
     const Separator = () => (
         <View style={styles.separator} />
     );
-
+    let promedioFinal: number = 0
+    let promedioValidado = ''
+    let reprobado = 'SD'
 
     const [estudiante, setEstudiante] = useState<string>('')
-
     const [estudiantes, setEstudiantes] = useState<string[]>([])
-
     const [pNota, setPNota] = useState('')
-
     const [sNota, setSNota] = useState('')
 
     const [notaFinales, setnotaFinales] = useState<string[]>([])
     const [notaFinal, setnotaFinal] = useState<string>('')
-
-    let promedioFinal: number = 0
-    let promedioValidado = ''
-    let reprobado = 'SD'
 
     const ValidarNota = () => {
         setEstudiantes([...estudiantes, estudiante])
@@ -31,8 +26,6 @@ const Calificaciones = () => {
         ValidacionDeAprobacion()
         setnotaFinal(promedioFinal.toPrecision())
     }
-
-
     const ValidacionDeAprobacion = () => {
         if (pNota === 'SD' || sNota === 'SD' || pNota === 'NSP' || sNota === 'SD') {
             promedioValidado = reprobado
@@ -43,53 +36,56 @@ const Calificaciones = () => {
         }
     }
     return (
+
         <View style={styles.containerPrincipal}>
-            <Text style={styles.textCabeza}>Nombre del estudiante</Text>
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.inputs}
-                    placeholder={"Nombre del Estudiante"}
-                    onChangeText={setEstudiante}
-                />
-            </View>
-            <View style={styles.containerNotas}>
-                <FormImputs
-                    title={"IP"}
-                    placeholder={"IP"}
-                    onChangeText={setPNota}
-                />
-                <FormImputs
-                    title={"IIP"}
-                    placeholder={"IIP"}
-                    onChangeText={setSNota}
-                />
-
-                <View>
-                    <Text style={styles.text}>NF</Text>
-                    <Text style={styles.nota2}>{notaFinal}</Text>
-
-                </View>
-                <Separator />
-                <TouchableOpacity
-                    onPress={ValidarNota}
-                    style={styles.botonInsertar}
-                    
-                >
-                    <Text style={styles.textbotonInsertar}>Agregar</Text>
-                </TouchableOpacity>
-            </View>
-           
             <ScrollView>
+                <Text style={styles.textCabeza}>Nombre del estudiante</Text>
+                <View style={styles.container}>
+                    <TextInput
+                        style={styles.inputs}
+                        placeholder={"Nombre del Estudiante"}
+                        onChangeText={setEstudiante}
+                    />
+                </View>
+                <View style={styles.containerNotas}>
+                    <FormImputs
+                        title={"IP"}
+                        placeholder={"IP"}
+                        onChangeText={setPNota}
+                    />
+                    <FormImputs
+                        title={"IIP"}
+                        placeholder={"IIP"}
+                        onChangeText={setSNota}
+                    />
+
+                    <View>
+                        <Text style={styles.text}>NF</Text>
+                        <Text style={styles.nota2}>{notaFinal}</Text>
+
+                    </View>
+                    <Separator />
+                    <TouchableOpacity
+                        onPress={ValidarNota}
+                        style={styles.botonInsertar}
+
+                    >
+                        <Text style={styles.textbotonInsertar}>Agregar</Text>
+                    </TouchableOpacity>
+                </View>
+
+
                 {
-                   
-                    estudiantes.map((estudiantes, index)  => (
-                        
+
+                    estudiantes.map((estudiantes, index) => (
+
                         <View style={styles.container} key={index}>
-                         
+
                             <Text style={styles.text} >{estudiantes}</Text>
-                           
+                            <Separator />
                             <Text style={[notaFinales[index] < '60' ? styles.textReprobado : styles.textAprobado]}>Nota Final :{notaFinales[index]}</Text>
                         </View>
+
                     ))
 
                 }
@@ -107,19 +103,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 10,
         paddingVertical: 10,
-        paddingHorizontal: 8,
+        paddingHorizontal: 20,
         borderRadius: 10,
         marginLeft: 10,
         borderWidth: 2,
         borderColor: '#22B5A3',
         marginTop: 5,
-      
+
     },
+  
     inputs: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 10,
-        fontSize: 22,
+        fontSize: 15,
         color: '#034C50',
         width: '70%'
     },
@@ -137,7 +134,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderRadius: 10,
         marginLeft: 10,
-        
+
         borderColor: '#8C8A8A',
         marginTop: 10,
     },
@@ -161,11 +158,11 @@ const styles = StyleSheet.create({
         color: '#05786A',
     },
     textReprobado: {
-        fontSize: 20,
+        fontSize: 15,
         color: '#B52222',
     },
     textAprobado: {
-        fontSize: 24,
+        fontSize: 15,
         color: '#05786A',
     },
     nota2: {
