@@ -9,9 +9,9 @@ const Calificaciones = () => {
 
     const [estudiantes, setEstudiantes] = useState<string[]>([])
 
-    const [primerNota, setPrimerNota] = useState('')
+    const [pNota, setPNota] = useState('')
 
-    const [segundaNota, setSegundaNota] = useState('')
+    const [sNota, setSNota] = useState('')
 
     const [notaFinales, setnotaFinales] = useState<string[]>([])
     const [notaFinal, setnotaFinal] = useState<string>('')
@@ -22,7 +22,7 @@ const Calificaciones = () => {
 
     const ValidarNota = () => {
         setEstudiantes([...estudiantes, estudiante])
-        let notaFinal = parseFloat(primerNota) + parseFloat(segundaNota)
+        let notaFinal = parseFloat(pNota) + parseFloat(sNota)
         promedioFinal = notaFinal / 2
         ValidacionDeAprobacion()
         setnotaFinal(promedioFinal.toPrecision())
@@ -30,7 +30,7 @@ const Calificaciones = () => {
 
 
     const ValidacionDeAprobacion = () => {
-        if (primerNota === 'SD' || segundaNota === 'SD' || primerNota === 'NSP' || segundaNota === 'SD') {
+        if (pNota === 'SD' || sNota === 'SD' || pNota === 'NSP' || sNota === 'SD') {
             promedioValidado = reprobado
             setnotaFinales([...notaFinales, promedioValidado])
         }
@@ -39,7 +39,7 @@ const Calificaciones = () => {
         }
     }
     return (
-        <View style={styles.containerBase}>
+        <View style={styles.containerPrincipal}>
             <Text style={styles.textCabeza}>Nombre del estudiante</Text>
             <View style={styles.container}>
                 <TextInput
@@ -48,28 +48,28 @@ const Calificaciones = () => {
                     onChangeText={setEstudiante}
                 />
             </View>
-            <View style={styles.containerNota}>
+            <View style={styles.containerNotas}>
                 <GetNota
                     title={"IP"}
                     placeholder={"IP"}
-                    onChangeText={setPrimerNota}
+                    onChangeText={setPNota}
                 />
                 <GetNota
                     title={"IIP"}
                     placeholder={"IIP"}
-                    onChangeText={setSegundaNota}
+                    onChangeText={setSNota}
                 />
 
                 <View>
                     <Text style={styles.text}>NF</Text>
-                    <Text style={styles.input2}>{notaFinal}</Text>
+                    <Text style={styles.nota2}>{notaFinal}</Text>
 
                 </View>
                 <TouchableOpacity
                     onPress={ValidarNota}
-                    style={styles.botonReset}
+                    style={styles.botonInsertar}
                 >
-                    <Text style={styles.textbotonReset}>Agregar</Text>
+                    <Text style={styles.textbotonInsertar}>Agregar</Text>
                 </TouchableOpacity>
             </View>
             <ScrollView>
@@ -77,7 +77,7 @@ const Calificaciones = () => {
                     estudiantes.map((estudiantes, index) => (
                         <View style={styles.container} key={index}>
                             <Text style={styles.text} >{estudiantes}</Text>
-                            <Text style={styles.text}>Nota Final :{notaFinales[index]}</Text>
+                            <Text style={[notaFinales[index] < '60' ? styles.textReprobado : styles.textAprobado]}>Nota Final :{notaFinales[index]}</Text>
                         </View>
                     ))
 
@@ -111,12 +111,12 @@ const styles = StyleSheet.create({
         color: '#034C50',
         width: '70%'
     },
-    containerBase: {
+    containerPrincipal: {
         flex: 1,
         backgroundColor: '#FFFFFF',
         justifyContent: 'center'
     },
-    containerNota: {
+    containerNotas: {
         width: '95%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
         borderColor: '#8C8A8A',
         marginTop: 10,
     },
-    botonReset: {
+    botonInsertar: {
         backgroundColor: '#8C8A8A',
         borderRadius: 8,
         width: '30%',
         paddingVertical: 7,
         marginTop: 5
     },
-    textbotonReset: {
+    textbotonInsertar: {
         color: '#05786A',
         fontWeight: 'bold',
         fontSize: 20,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#05786A',
     },
-    input2: {
+    nota2: {
         backgroundColor: '#F2F8FB',
         borderRadius: 8,
         padding: 10,
@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
     textCabeza: {
         fontSize: 30,
         color: '#034C50',
-        marginTop: 50,
         marginLeft: 10
     }
 
