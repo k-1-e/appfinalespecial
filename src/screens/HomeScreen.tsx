@@ -8,7 +8,6 @@ const FeedScreen = ({ navigation }) => {
     const [tareas, setTareas] = useState<string[]>([])
 
 
-
     // const [usuario , setUsuario] = useState('')
     const crearTarea = () => {
         setTareas([...tareas, tarea])
@@ -26,37 +25,48 @@ const FeedScreen = ({ navigation }) => {
 
     return (
         <ScrollView>
-        <View style={styles.containerBase}>
-            <View style={styles.container}>
-                <TextInput
-                    placeholder={"ingresar tarea"}
-                    onChangeText={setTarea}
-                />
-                <Button
-                    title="agregar"
-                    onPress={crearTarea}
-                />
-            </View>
 
-            {
-                tareas.map((lista, index) => (
-                    <View style={styles.container} key={index}>
+            <Text style={styles.colortexto}>Nombre del Estudiante</Text>
 
-                        <Text style={styles.text}>{lista}</Text>
+   
+                <View style={styles.container}>
 
-                        <Button
-                            color="red"
-                            title="Eliminar"
-                            onPress={() => eliminarTarea(index)}
-                        />
+                    <TextInput
+
+                        placeholder={"Nombre del estudiante"}
+                        onChangeText={setTarea}
+
+                    />
+
+                </View>
+                <View style={styles.botonagregar}>
+                    <Button
+                        title="agregar"
+                        onPress={crearTarea}
+                    />
+                    
+                </View>
 
 
-                    </View>
+                {
+                    tareas.map((lista, index) => (
+                        <View style={styles.container} key={index}>
 
-                ))
-            }
+                            <Text style={styles.text}>{lista}</Text>
 
-        </View>
+                            <Button
+                                color="red"
+                                title="Eliminar"
+                                onPress={() => eliminarTarea(index)}
+                            />
+
+
+                        </View>
+
+                    ))
+                }
+
+         
         </ScrollView>
     )
 }
@@ -74,11 +84,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         marginLeft: 10,
         borderWidth: 2,
-        borderRadius: 10
+        borderRadius: 10,
     },
     containerBase: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+    },
+    botonagregar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginHorizontal: 300,
+        width: 330,
+        padding: '1%'
     },
 
     textbotonInsertar: {
@@ -86,6 +103,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 25,
         borderRadius: 50,
+
+    },
+    colortexto: {
+        fontSize: 20,
+        color: '#22B5A3',
+        padding: '1%',
+
     },
     text: {
         fontSize: 34,
