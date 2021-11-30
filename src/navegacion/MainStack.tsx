@@ -17,7 +17,7 @@ const MainStackNavigator = () => {
                 headerStyle: {
                   backgroundColor: '#C4C4C4',
                 },
-                headerTintColor: '#fff',
+                headerTintColor: 'black',
                 headerTitleStyle: {
                   fontWeight: 'bold',    
               },
