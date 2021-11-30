@@ -99,9 +99,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderRadius: 10,
         marginLeft: 10,
-        borderWidth: 3,
-        borderColor: '#8C8A8A',
-        marginTop: 10,
+        borderWidth: 2,
+        borderColor: '#22B5A3',
+        marginTop: 5,
+      
     },
     inputs: {
         backgroundColor: '#FFFFFF',
@@ -125,13 +126,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderRadius: 10,
         marginLeft: 10,
-        borderWidth: 3,
+        
         borderColor: '#8C8A8A',
         marginTop: 10,
     },
     botonInsertar: {
         backgroundColor: '#8C8A8A',
-        borderRadius: 8,
+        borderRadius: 5,
         width: '30%',
         paddingVertical: 7,
         marginTop: 5
@@ -145,11 +146,11 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        fontSize: 24,
+        fontSize: 20,
         color: '#05786A',
     },
     textReprobado: {
-        fontSize: 24,
+        fontSize: 20,
         color: '#B52222',
     },
     textAprobado: {
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 10,
         textAlign: 'right',
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#004445'
 
