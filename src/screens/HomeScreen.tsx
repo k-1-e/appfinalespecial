@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import GetNota from '../componentes/FormImputs'
+import FormImputs from '../componentes/FormImputs'
 
 const Calificaciones = () => {
+
+    const Separator = () => (
+        <View style={styles.separator} />
+    );
 
 
     const [estudiante, setEstudiante] = useState<string>('')
@@ -49,12 +53,12 @@ const Calificaciones = () => {
                 />
             </View>
             <View style={styles.containerNotas}>
-                <GetNota
+                <FormImputs
                     title={"IP"}
                     placeholder={"IP"}
                     onChangeText={setPNota}
                 />
-                <GetNota
+                <FormImputs
                     title={"IIP"}
                     placeholder={"IIP"}
                     onChangeText={setSNota}
@@ -65,18 +69,25 @@ const Calificaciones = () => {
                     <Text style={styles.nota2}>{notaFinal}</Text>
 
                 </View>
+                <Separator />
                 <TouchableOpacity
                     onPress={ValidarNota}
                     style={styles.botonInsertar}
+                    
                 >
                     <Text style={styles.textbotonInsertar}>Agregar</Text>
                 </TouchableOpacity>
             </View>
+           
             <ScrollView>
                 {
-                    estudiantes.map((estudiantes, index) => (
+                   
+                    estudiantes.map((estudiantes, index)  => (
+                        
                         <View style={styles.container} key={index}>
+                         
                             <Text style={styles.text} >{estudiantes}</Text>
+                           
                             <Text style={[notaFinales[index] < '60' ? styles.textReprobado : styles.textAprobado]}>Nota Final :{notaFinales[index]}</Text>
                         </View>
                     ))
@@ -171,6 +182,11 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#034C50',
         marginLeft: 10
-    }
+    },
+    separator: {
+        marginVertical: 8,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+    },
 
 })
